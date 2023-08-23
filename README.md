@@ -1,1 +1,1 @@
-# Satellite_Image_Classification
+I created a Keras CNN to classify satellite images (4 land cover types) using a 28 x 28 x 4 input format. Preprocessing encompassed reshaping, normalization, and one-hot encoding. The model attained 97% accuracy on a 10-epoch validation run, featuring dropout for improved generalization.
