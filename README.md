@@ -1,63 +1,85 @@
-# Satellite Image Classification
+# Satellite Land-Cover Classification with CNNs
 
-This repository contains an implementation of a convolutional neural network (CNN) to classify satellite imagery into different land cover categories. The model was developed using Keras and trained on preprocessed satellite image data. The classification task is designed to distinguish between multiple terrain types such as forest, water, urban, and barren land.
+Convolutional neural network for classifying satellite imagery into multiple land-cover categories using **TensorFlow/Keras**.
 
-During development, the model achieved strong validation performance through standard preprocessing steps (normalization, reshaping, and one-hot encoding) and the use of dropout for regularization.
+The project demonstrates an end-to-end image-classification workflow covering preprocessing, model training, regularization, validation, and evaluation on remote-sensing imagery.
 
----
+## Problem
 
-## Project Overview
+Land-cover classification assigns a semantic class to satellite imagery, supporting applications such as:
 
-Satellite image classification is a remote sensing task where an input image is assigned a label corresponding to a specific land cover type. Automated classification has applications in:
+- environmental monitoring
+- land-use mapping
+- agricultural assessment
+- urban planning
+- disaster-response analysis
 
-- Land use and land cover mapping  
-- Environmental monitoring  
-- Agricultural assessment  
-- Urban planning  
-- Disaster response  
+The model learns visual features directly from satellite pixels rather than relying on manually engineered descriptors.
 
-Deep learning models such as CNNs are well-suited for this task because they can learn hierarchical spatial features directly from image pixels without manual feature engineering.
+## ML Pipeline
 
----
+```text
+Satellite Images
+      ↓
+Normalization / Reshaping
+      ↓
+Label Encoding
+      ↓
+CNN Feature Extraction
+      ↓
+Dropout Regularization
+      ↓
+Softmax Classification
+      ↓
+Validation / Evaluation
+```
+
+## Model
+
+The classifier is implemented in **Keras** and trained on preprocessed satellite imagery.
+
+Key elements include:
+
+- convolutional layers for spatial feature extraction
+- normalized image inputs
+- one-hot encoded labels
+- dropout for regularization
+- categorical classification objective
+- validation monitoring during training
+
+The model achieved approximately **97% validation accuracy** during development.
+
+## Tech Stack
+
+- Python
+- TensorFlow / Keras
+- NumPy
+- Pandas
+- Matplotlib
+- Jupyter Notebook
 
 ## Repository Structure
 
-| File / Directory | Description |
-|------------------|-------------|
-| `satellite_one_layer_NN.ipynb` | Jupyter notebook with model definition, training, and evaluation |
-| `README.md` | This documentation file |
-| `.gitignore` | Standard Git ignore configuration |
+```text
+Satellite_Image_Classification/
+├── satellite_one_layer_NN.ipynb
+├── README.md
+└── .gitignore
+```
 
----
-
-## Model Description
-
-The model is a convolutional neural network implemented in Keras. Key characteristics include:
-
-- Input format: multi-band satellite images reshaped into appropriate tensor format
-- Preprocessing: normalization of pixel values and one-hot encoding of labels
-- Training: model fitted with training and validation data
-- Regularization: dropout layers to reduce overfitting
-- Evaluation: standard accuracy metrics used to assess performance
-
-The trained model achieved approximately **97% validation accuracy** over a 10-epoch run, indicating reliable performance for the classification categories defined in this project.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-Before running the code locally, ensure you have:
-
-- Python 3.8 or higher
-- Jupyter Notebook or JupyterLab
-- Required libraries installed (TensorFlow/Keras, NumPy, Pandas, Matplotlib)
-
-### Installation
-
-Clone the repository:
+## Running the Project
 
 ```bash
 git clone https://github.com/paluuuk/Satellite_Image_Classification.git
 cd Satellite_Image_Classification
+pip install tensorflow numpy pandas matplotlib jupyter
+jupyter notebook
+```
+
+Open `satellite_one_layer_NN.ipynb` and update any local dataset paths before running the training workflow.
+
+## Current Status
+
+This repository is intentionally a compact experimental ML project. It is useful as supporting evidence of computer-vision and remote-sensing experience, while larger projects in this portfolio demonstrate deeper engineering and deployment work.
+
+Potential next steps include extracting the training pipeline into reusable modules, adding reproducible configuration, reporting per-class precision/recall and a confusion matrix, and exposing inference through a lightweight API or CLI.
