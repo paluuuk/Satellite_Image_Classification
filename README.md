@@ -1,85 +1,43 @@
-# Satellite Land-Cover Classification with CNNs
+# Satellite Land-Cover Classification
 
-Convolutional neural network for classifying satellite imagery into multiple land-cover categories using **TensorFlow/Keras**.
+A four-class image-classification experiment using 28 × 28 satellite patches with red, green, blue, and near-infrared channels. The notebook compares a linear softmax baseline with a small convolutional neural network.
 
-The project demonstrates an end-to-end image-classification workflow covering preprocessing, model training, regularization, validation, and evaluation on remote-sensing imagery.
+## Models and data flow
 
-## Problem
+| Component | Implementation |
+| --- | --- |
+| Inputs | Headerless feature CSV with 3,136 values per image; a matching four-column one-hot label CSV |
+| Baseline | Flattened inputs → four-unit softmax layer; Adam and categorical cross-entropy |
+| CNN | 32- and 64-filter convolution blocks, max pooling, a 128-unit dense layer, dropout, and four-class softmax |
+| CNN labels | Integer class IDs with sparse categorical cross-entropy |
+| Preprocessing | Float32 image tensors scaled by 255 |
+| Validation | 10% random holdout for the CNN, with split seed 42 |
+| Classes | Barren land, trees, grassland, other |
 
-Land-cover classification assigns a semantic class to satellite imagery, supporting applications such as:
+The two model sections are independent experiments in `satellite_one_layer_NN.ipynb`.
 
-- environmental monitoring
-- land-use mapping
-- agricultural assessment
-- urban planning
-- disaster-response analysis
-
-The model learns visual features directly from satellite pixels rather than relying on manually engineered descriptors.
-
-## ML Pipeline
-
-```text
-Satellite Images
-      ↓
-Normalization / Reshaping
-      ↓
-Label Encoding
-      ↓
-CNN Feature Extraction
-      ↓
-Dropout Regularization
-      ↓
-Softmax Classification
-      ↓
-Validation / Evaluation
-```
-
-## Model
-
-The classifier is implemented in **Keras** and trained on preprocessed satellite imagery.
-
-Key elements include:
-
-- convolutional layers for spatial feature extraction
-- normalized image inputs
-- one-hot encoded labels
-- dropout for regularization
-- categorical classification objective
-- validation monitoring during training
-
-The model achieved approximately **97% validation accuracy** during development.
-
-## Tech Stack
-
-- Python
-- TensorFlow / Keras
-- NumPy
-- Pandas
-- Matplotlib
-- Jupyter Notebook
-
-## Repository Structure
-
-```text
-Satellite_Image_Classification/
-├── satellite_one_layer_NN.ipynb
-├── README.md
-└── .gitignore
-```
-
-## Running the Project
+## Run locally
 
 ```bash
 git clone https://github.com/paluuuk/Satellite_Image_Classification.git
 cd Satellite_Image_Classification
-pip install tensorflow numpy pandas matplotlib jupyter
-jupyter notebook
+python -m venv .venv
+# Activate .venv using the command for your shell.
+python -m pip install -r requirements.txt
+jupyter notebook satellite_one_layer_NN.ipynb
 ```
 
-Open `satellite_one_layer_NN.ipynb` and update any local dataset paths before running the training workflow.
+Place `X_test_sat4.csv` and `y_test_sat4.csv` beside the notebook, or change its input paths. Dataset files and trained weights are not included. The current code reads numeric CSVs without headers and derives the number of images from the input.
 
-## Current Status
+## Evaluation and scope
 
-This repository is intentionally a compact experimental ML project. It is useful as supporting evidence of computer-vision and remote-sensing experience, while larger projects in this portfolio demonstrate deeper engineering and deployment work.
+This is an exploratory notebook, with validation drawn from the supplied CSV rather than a separately managed benchmark test set. The filenames alone do not establish an independent train/test protocol.
 
-Potential next steps include extracting the training pipeline into reusable modules, adding reproducible configuration, reporting per-class precision/recall and a confusion matrix, and exposing inference through a lightweight API or CLI.
+Saved outputs were cleared when correcting label/loss consistency, CNN normalization, and prediction-display indexing. Retrain the models before reporting new metrics; this repository does not present a newly verified accuracy figure.
+
+## Repository
+
+- [Notebook](satellite_one_layer_NN.ipynb): preprocessing, baseline, CNN, and prediction inspection.
+- [Dependencies](requirements.txt): Python packages imported by the notebook.
+
+**Stack:** Python, TensorFlow/Keras, NumPy, pandas, scikit-learn, scikit-image, Matplotlib.
