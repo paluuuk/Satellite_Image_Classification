@@ -41,3 +41,11 @@ Saved outputs were cleared when correcting label/loss consistency, CNN normaliza
 - [Dependencies](requirements.txt): Python packages imported by the notebook.
 
 **Stack:** Python, TensorFlow/Keras, NumPy, pandas, scikit-learn, scikit-image, Matplotlib.
+
+## Related engineering projects
+
+- [Aerial road segmentation](https://github.com/paluuuk/Aerial-Image-Segmentation)
+- [Exoskeleton terrain perception](https://github.com/paluuuk/Vision-based-Terrain-Recognition-for-Lower-Limb-Exoskeletons)
+
+[View all selected engineering work](https://github.com/paluuuk)
+
